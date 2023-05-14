@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User_Table{
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt
+  user_has_Graphs User_Has_Graph[]
+}
+
+model Graph{
+  id Int @id @default(autoincrement())
+  graphValue_x String?
+  graphValue_y String?
+  dataCircle String?
+  dataScatter String?
+  dataRadar String?
+  graphType String
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt
+  user_has_Graphs User_Has_Graph[]
+}
+
+model User_Has_Graph{
+  id Int @id @default(autoincrement())
+  user User_Table @relation(fields: [userId], references: [id])
+  userId Int
+  graph Graph @relation(fields: [graphId], references: [id])
+  graphId Int
+}
+
+
