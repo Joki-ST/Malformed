@@ -1,28 +1,21 @@
-import { PrismaClient } from "@prisma/client";
+import * as dotenv from "dotenv"
+import * as express from "express"
+import * as cors from "cors"
 
-const prisma = new PrismaClient()
+dotenv.config();
 
-async function main(){
-    //await prisma.user_Table.deleteMany();
-    /*
-    await prisma.user_Table.create({
-        data:{
-            username: 'Jovan',
-            password: 'xxxxxxx'
-        }
-    })
-    const allUser = await prisma.user_Table.findMany()
-    console.log(allUser);
-    */
-    const allUser = await prisma.user_Table.findMany()
+
+if(!process.env.PORT){
+    process.exit(1);
 }
 
-main()
-.then(async() =>{
-    await prisma.$disconnect()
-})
-.catch(async(e)=>{
-    console.error(e)
-    await prisma.$disconnect
-    process.exit(1)
+const PORT: number = parseInt(process.env.PORT as string, 10);
+
+const app = express();
+
+app.use(cors());
+app.use(express.json())
+
+app.listen(PORT,() =>{
+    console.log(`Listening on port ${PORT}`)
 })
