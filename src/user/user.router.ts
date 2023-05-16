@@ -31,3 +31,18 @@ userRouter.get("/:id",async (request:Request, response:Response)=>{
         return response.status(500).json(error.message);
     }
 })
+
+userRouter.post("/", body("email").isString(), body("username").isString(), body("password").isString(), async (request:Request, response:Response) =>{
+    const errors = validationResult(request);
+    if(!errors.isEmpty()){
+        return response.status(400).json({errors: errors.array()});
+    }
+    try{
+        const user = request.body
+        const newUser = await UserService.createUser(user)
+        return response.status(201).json(newUser);
+    }
+    catch(error: any){
+        return response.status(500).json(error.message);
+    }
+})
