@@ -15,6 +15,7 @@ enum GraphType {
 type User_Table = {
  username: string;
  password: string;
+// email: string;
 }
 
 
@@ -40,7 +41,8 @@ async function seed() {
             return db.user_Table.create({
                 data:{
                     username:user.username,
-                    password:user.password
+                    password:user.password,
+                    
                 },
             })
         }
@@ -69,11 +71,13 @@ function createUsers(): Array<User_Table>{
     return [
         {
             'username':'a Espada',
-            'password':'xxxxxxxxx'
+            'password':'xxxxxxxxx',
+            //'email': 'asl@gmail.com'
         },
         {
             'username':'OKI',
-            'password':'xxxxxxxxx'
+            'password':'xxxxxxxxx',
+            //'email':'oki@gmail.com'
         }]
 }
 
