@@ -53,6 +53,20 @@ export const createUser = async (user: Omit<User_Table,"id">): Promise<User_Tabl
     })
 }
 
+export const deleteUser = async (id:number): Promise<User_Table> => {
+    return db.user_Table.delete({
+        where:{
+            id:id
+        },
+        select:{
+            id:true,
+            username:true,
+            password:true,
+            email:true
+        }
+    })
+}
+
 export const updateUser = async (user: Omit<User_Table,"id">,id:number): Promise<User_Table> => {
     const {username,email} = user;
     return db.user_Table.update({
